@@ -15,7 +15,6 @@ crowbar:
   run_order: 80
   chef_order: 80
 
-# TODO shouldn't hardcode maverick, crowbar is not flexible enough yet
 # TODO crowbar *and* chef cookbooks don't really need -dbg
 debs:
   repos:
