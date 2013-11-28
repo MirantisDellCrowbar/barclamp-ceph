@@ -8,6 +8,8 @@ barclamp:
 
   os_support:
     - ubuntu-12.04
+    - centos-6.4
+    - redhat-6.4
 
 crowbar:
   layout: 1
@@ -31,7 +33,27 @@ debs:
     - libcephfs1
     - gdisk
     - cryptsetup
-    - libgoogle-perftools0
+    - google-perftools2
+    - libgoogle-perftools4
+    - libaio1
+    - libsnappy1
+    - libleveldb1
+
+rpms:
+  centos-6.4:
+    repos:
+      - rpm http://ceph.com/rpm-emperor
+  redhat-6.4:
+    repos:
+      - rpm http://ceph.com/rpm-emperor
+  pkgs:
+    - ceph
+    - ceph-debug
+    - snappy
+    - leveldb
+    - gdisk
+    - python-argparse
+    - gperftools-libs
 
 gems:
   pkgs:
