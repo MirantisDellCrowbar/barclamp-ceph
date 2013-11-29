@@ -46,6 +46,7 @@ rpms:
   redhat-6.4:
     repos:
       - rpm http://ceph.com/rpm-emperor
+      - bare ceph 10 http://ceph.com/rpm-bobtail/rhel6/x86_64/repodata/
   pkgs:
     - ceph
     - ceph-debug
