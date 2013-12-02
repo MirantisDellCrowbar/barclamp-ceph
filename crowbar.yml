@@ -19,8 +19,9 @@ crowbar:
 
 # TODO crowbar *and* chef cookbooks don't really need -dbg
 debs:
-  repos:
-    - deb http://ceph.com/debian-bobtail precise main
+  ubuntu-12.04:
+    repos:
+      - deb http://ceph.com/debian-emperor precise main
   pkgs:
     - ceph
     - ceph-dbg
