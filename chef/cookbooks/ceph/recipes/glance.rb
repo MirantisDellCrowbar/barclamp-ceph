@@ -39,8 +39,8 @@ ruby_block "save #{glance_user} key in node attributes" do
 end
 
 file "/etc/ceph/ceph.client.#{glance_user}.keyring" do
-  owner "root"
-  group "openstack-glance"
+  owner node[:glance][:user]
+  group node[:glance][:group]
   mode 0640
   action :touch
 end
