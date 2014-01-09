@@ -20,7 +20,6 @@ end
 
 file "/etc/ceph/keyring" do
   owner "root"
-  group "openstack-cinder"
   mode 0640
   action :touch
 end
