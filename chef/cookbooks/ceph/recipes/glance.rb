@@ -8,6 +8,10 @@ end
 # TODO cluster name
 cluster = 'ceph'
 
+service "glance-api" do
+  action :nothing
+end
+
 if !File.exists?("/etc/ceph/keyring")
 
   admin_secret = node["ceph"]["admin-secret"]
@@ -43,6 +47,7 @@ file "/etc/ceph/ceph.client.#{glance_user}.keyring" do
   group node[:glance][:group]
   mode 0640
   action :touch
+  notifies :restart, "service[glance-api]", :immediately
 end
 
 execute "create new pool #{glance_pool}" do
