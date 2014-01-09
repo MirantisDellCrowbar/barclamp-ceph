@@ -19,7 +19,7 @@
 
 packages = node[:ceph][:packages][:common]
 if node[:ceph][:install_debug]
-  packages << node[:ceph][:packages][:common_debug]
+  packages += node[:ceph][:packages][:common_debug]
 end
 
 packages.each do |pkg|
