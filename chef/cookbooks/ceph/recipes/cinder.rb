@@ -8,21 +8,19 @@ end
 # TODO cluster name
 cluster = 'ceph'
 
-if !File.exists?("/etc/ceph/keyring")
+service "cinder-volume" do
+  action :nothing
+end
 
+service "cinder-api" do
+  action :nothing
+end
+
+unless File.exists?("/etc/ceph/keyring")
   admin_secret = node["ceph"]["admin-secret"]
-
   execute "create admin keyring" do
     command "ceph-authtool --create-keyring /etc/ceph/keyring --name=client.admin --add-key='#{admin_secret}'"
   end
-
-end
-
-file "/etc/ceph/keyring" do
-  owner "root"
-  group "openstack-cinder"
-  mode 0640
-  action :touch
 end
 
 cinder_user = node[:cinder][:volume][:rbd][:user]
@@ -68,7 +66,9 @@ file "/etc/ceph/ceph.client.#{cinder_user}.keyring" do
   owner node[:cinder][:user]
   group node[:cinder][:group]
   mode 0640
-  action :create
+  action :touch
+  notifies :restart, "service[cinder-api]", :immediately
+  notifies :restart, "service[cinder-volume]", :immediately
 end
 
 execute "create new pool" do
