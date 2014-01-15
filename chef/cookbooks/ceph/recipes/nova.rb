@@ -41,8 +41,8 @@ if cinder_controller.length > 0
   cinder_user = cinder_controller[0][:cinder][:volume][:rbd][:user]
   cinder_pool = cinder_controller[0][:cinder][:volume][:rbd][:pool]
   cinder_uuid = cinder_controller[0][:cinder][:volume][:rbd][:secret_uuid]
-  # temporary use cinder_user for nova
-  nova_user = cinder_user #node['nova']['ceph']['user']
+  # temporary use hardcoded username for nova
+  nova_user = "nova" #cinder_user #node['nova']['ceph']['user']
   nova_group = "nova"
 
   secret_file_path = "/etc/ceph/ceph-secret.xml"
@@ -68,7 +68,7 @@ if cinder_controller.length > 0
             --name=client.'#{nova_user}' --add-key='#{client_key}' ]
       raise 'creating nova keyring failed' unless $?.exitstatus == 0
 
-      FileUtils.chown('root','openstack-nova',"etc/ceph/#{cluster}.client.#{nova_user}.keyring")
+      FileUtils.chown('root',nova_group,"etc/ceph/#{cluster}.client.#{nova_user}.keyring")
       FileUtils.chmod(0640,"/etc/ceph/#{cluster}.client.#{nova_user}.keyring")
       
       node.set['ceph']['nova-secret'] = client_key
